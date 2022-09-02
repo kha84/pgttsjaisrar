@@ -1,6 +1,6 @@
 import speech_recognition as sr
 import pyttsx3
-import pywhatkit
+#import pywhatkit
 import datetime
 import wikipedia
 import pyjokes
@@ -49,11 +49,11 @@ def run_alexa():
     print("run_alexa() got command: " + command)
     if not command:
         return
-    if 'play' in command:
-        song = command.replace('play', '')
-        talk('playing ' + song)
-        pywhatkit.playonyt(song)
-    elif 'time' in command:
+#    if 'play' in command:
+#        song = command.replace('play', '')
+#        talk('playing ' + song)
+#        pywhatkit.playonyt(song)
+    if 'time' in command:
         time = datetime.datetime.now().strftime('%I:%M %p')
         talk('Current time is ' + time)
     elif 'who is' in command:

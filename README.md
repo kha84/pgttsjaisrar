@@ -33,12 +33,30 @@ cd pgttsjaisrar
 ln -s $(pwd)/sayit /usr/local/bin/sayit
 ```
 
-4. Create a service, that will be executed for multi-user.target
+4. Make sure you have /usr/local/bin in your $PATH, if not - change the profile
+
+5. Create a service, that will be executed for multi-user.target (look inside .service file, you might need to update your path)
+
+Doesn't work yet.
 
 ```
-TODO
+sudo cp $(pwd)/voiceassistant.service /lib/systemd/system/voiceassistant.service 
+sudo systemctl daemon-reload 
+sudo systemctl enable voiceassistant.service 
+sudo systemctl start voiceassistant.service 
+sudo systemctl status voiceassistant.service
+```
+
+## Uninstall
+
+```
+sudo systemctl stop voiceassistant.service
+sudo systemctl disable voiceassistant.service
+rm /lib/systemd/system/voiceassistant.service 
+systemctl daemon-reload
 ```
 
 ## TODO:
 
 1. Switch from online recognition to Mozilla Deep Speech
+2. Implement a fallback mechanism in sayit shell file, so if internet is not around (and gTTS won't work) we'll switch to something different 
