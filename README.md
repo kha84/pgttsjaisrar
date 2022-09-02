@@ -4,10 +4,10 @@
 ## Synopsis
 
 Many thanks to a lovely guy, who inspired me to learn some python. 
-Watch his tutorial, where he makes the original project "Romantic Alexa" (right in front of your eyes)[https://www.youtube.com/watch?v=AWvsXxDtEkU]
+Watch his tutorial, where he makes the original project "Romantic Alexa" [right in front of your eyes](https://www.youtube.com/watch?v=AWvsXxDtEkU)
 I just made some cosmetical changes to it and swapped the funky python voice lib with something more pleasant from Google.
 
-This will be a part of the pet project I'm working on - (to build an ultimate entertainment / desktop replacement machine out of cheap ARM SBC)[https://orange-pi-4-lts.blogspot.com/p/todo.html]
+This will be a part of the pet project I'm working on - [to build an ultimate entertainment / desktop replacement machine out of cheap ARM SBC](https://orange-pi-4-lts.blogspot.com/p/todo.html)
 
 ## Installation on Debian Linux
 
@@ -38,3 +38,7 @@ ln -s $(pwd)/sayit /usr/local/bin/sayit
 ```
 TODO
 ```
+
+## TODO:
+
+1. Switch from online recognition to Mozilla Deep Speech

@@ -1,0 +1,15 @@
+#!/bin/sh
+if [ -z "$1" ] 
+then
+  echo "Error: no input parameter is given"
+  exit 0
+fi
+
+# implementation with using ffplay 
+#tfile="$(mktemp /tmp/tts.XXXXXXXXX.mp3)" || exit 1
+#~pi/.local/bin/gtts-cli "$1" --output $tfile
+#ffplay -nodisp -autoexit -loglevel quiet $tfile
+#rm $tfile
+
+# implementation with using SoX
+~/.local/bin/gtts-cli "$1" | play -t mp3 -
