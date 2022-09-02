@@ -1,36 +1,40 @@
-# romantic-alexa
-## Build an Artificial Assistant
+# Python-Google-Text-To-Speech-Jarvis-AI-Speech-Recognition-Alexa-Replacement
 
-### Full tutorial (video)
-To watch the tutorial, click on the image below
 
-[![Watch the video-- Build your own Alexa](https://img.youtube.com/vi/AWvsXxDtEkU/0.jpg)](https://www.youtube.com/watch?v=AWvsXxDtEkU "Build your own Alexa")
+## Synopsis
 
-## Installation
-### For windows users
-(run those in command prompt/cmt/terminal)
-For the robot to listen to our voice/speech
-`pip install speechRecognition`
+Many thanks to a lovely guy, who inspired me to learn some python. 
+Watch his tutorial, where he makes the original project "Romantic Alexa" (right in front of your eyes)[https://www.youtube.com/watch?v=AWvsXxDtEkU]
+I just made some cosmetical changes to it and swapped the funky python voice lib with something more pleasant from Google.
 
-To speak out, or text to speech
-`pip install pyttsx3`
+This will be a part of the pet project I'm working on - (to build an ultimate entertainment / desktop replacement machine out of cheap ARM SBC)[https://orange-pi-4-lts.blogspot.com/p/todo.html]
 
-For advance control on browser
-`pip install pywhatkit`
+## Installation on Debian Linux
 
-To get wikipedia data
-`pip install wikipedia`
 
-To get funny jokes
-`pip install pyjokes`
+1. Install all dependancies
 
-### For linux users
-Learn all the above commands on terminal. Make sure to use `pip3`, because in linux `pip` refers for `python2` and `pip3` refers to `python3`.
-Install these too - 
-`pip3 install pyAudio`
+```
+apt install python3-tk python3-dev sox libsox-fmt-all
+pip3 install gTTS speechRecognition pyttsx3 pywhatkit wikipedia pyAudio pyjokes
 
-In case any error pops up install this -
-`pip3 install portAudio`
+```
 
-#### Issues
-If you encounter any problems feel free to open a new issue. Before that check other closed issues and check if your issue matches with any older issues.
+2. Clone this project to a folder of your choice
+
+```
+git clone https://github.com/kha84/pgttsjaisrar
+cd pgttsjaisrar
+```
+
+3. Copy (or symlink) "sayit" script to /usr/local/bin/sayit
+
+```
+ln -s $(pwd)/sayit /usr/local/bin/sayit
+```
+
+4. Create a service, that will be executed for multi-user.target
+
+```
+TODO
+```
