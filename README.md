@@ -37,7 +37,6 @@ ln -s $(pwd)/sayit /usr/local/bin/sayit
 
 5. Create a service, that will be executed for multi-user.target (look inside .service file, you might need to update your path)
 
-Doesn't work yet.
 
 ```
 sudo cp $(pwd)/voiceassistant.service /lib/systemd/system/voiceassistant.service 
@@ -56,7 +55,19 @@ rm /lib/systemd/system/voiceassistant.service
 systemctl daemon-reload
 ```
 
+This step doesn't work yet. Run  it manually:
+python3 main.py
+
 ## TODO:
 
-1. Switch from online recognition to Mozilla Deep Speech
-2. Implement a fallback mechanism in sayit shell file, so if internet is not around (and gTTS won't work) we'll switch to something different 
+0. Fix bug with service
+  - where the heck is log written to?
+  - hearing doesn't work
+  - playback doesn't work
+  
+1. Multi-language support
+2. Query DuckDuckGo
+3. Cache mp3 files to /tmp
+4. Dialog mode
+5. Switch from online recognition to Mozilla Deep Speech
+6. Implement a fallback mechanism in sayit shell file, so if internet is not around (and gTTS won't work) we'll switch to something different 

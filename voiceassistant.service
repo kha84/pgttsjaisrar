@@ -1,0 +1,11 @@
+[Unit]
+Description=Voice Assistant
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/projects/pgttsjaisrar/main.py
+User=pi
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
