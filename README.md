@@ -7,7 +7,7 @@ Many thanks to a lovely guy, who inspired me to learn some python.
 Watch his tutorial, where he makes the original project "Romantic Alexa" [right in front of your eyes](https://www.youtube.com/watch?v=AWvsXxDtEkU)
 I just made some cosmetical changes to it and swapped the funky python voice lib with something more pleasant from Google.
 
-This will be a part of the pet project I'm working on - [to build an ultimate entertainment / desktop replacement machine out of cheap ARM SBC](https://orange-pi-4-lts.blogspot.com/p/todo.html)
+This will be a part of the pet project I'm working on - [to build an ultimate entertainment / desktop replacement machine out of cheap ARM SBC](https://orange-pi-4-lts.blogspot.com/p/todo.html). So this "voice assistant" will be running as background daemon with the system startup.
 
 ## Installation on Debian Linux
 
@@ -66,8 +66,26 @@ python3 main.py
   - playback doesn't work
   
 1. Multi-language support
-2. Query DuckDuckGo
-3. Cache mp3 files to /tmp
-4. Dialog mode
+   https://gtts.readthedocs.io/en/latest/module.html#languages-gtts-lang
+   https://pypi.org/project/SpeechRecognition/
+   
+2. Query DuckDuckGo by default
+   https://duckduckgo.com/api
+   https://pypi.org/project/DuckDuckGo-Python3-Library/
+   https://github.com/crazedpsyc/python-duckduckgo/
+
+3. Cache mp3 files to /tmp in "sayit"
+
+4. Dialog mode, as an alternative to wake-up word:
+    - hey orange
+    - yeah?
+    - what is the best search engine?
+    - (no applicable command found => get answer from DDG)
+
 5. Switch from online recognition to Mozilla Deep Speech
+
 6. Implement a fallback mechanism in sayit shell file, so if internet is not around (and gTTS won't work) we'll switch to something different 
+
+7. Implement some more commands, like "Switch to gaming mode" / "Enough of gaming" with confirmations
+
+8. Return the browser manipulation tool back (DISPLAY issue, when X is not started)
