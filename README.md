@@ -11,6 +11,10 @@ This will be a part of the pet project I'm working on - [to build an ultimate en
 
 But it doesn't mean you need to have the same device as me - it could run on any Linux machine. 
 
+## Demo
+
+[![Watch the demo](https://img.youtube.com/vi/STfxY-XwTko/0.jpg)](https://www.youtube.com/watch?v=STfxY-XwTko "Voice assistant for SBC")
+
 ## Installation (Debian Bullseye 11)
 
 
@@ -35,9 +39,12 @@ cd pgttsjaisrar
 ln -s $(pwd)/sayit /usr/local/bin/sayit
 ```
 
-4. Make sure you have /usr/local/bin in your $PATH, if not - change the profile
+This script can be used alone in commandline as a simple text-to-speech wrapper. 
+It will get a very simple fallback option soon, so if it detects there's an issue with gTTS (or with your internet) it will switch to [something different like espeak or festival](https://orange-pi-4-lts.blogspot.com/2022/09/speech-recognition-and-text-to-speech.html). 
+So far, just make sure you have /usr/local/bin in your $PATH. 
+If you don't modify your profile scripts ~/.profile or ~/.bashrc to add it
 
-5. Test the voice assistant by running it stand alone:
+4. Test the voice assistant by running it stand alone:
 
 ```
 python3 main.py
@@ -45,14 +52,14 @@ python3 main.py
 
 Give it 10 or so seconds to warm up, look after logs it's printing and then say out loud "Orange, who is Donald Trump?"
 
-6. Create a service, that will be executed for multi-user.target.
+5. Create a systemd service, that will be executed for multi-user.target.
 Before doing that, look inside voiceassistant.service file. 
-You might need to update the path to main.py script, if you installed it to different than mine location.
-Also make sure that xxx in "User=xxx" is actually the user, who is running PulseAudio process. To get that to know run 
+You might need to update the path to main.py script, as you installed it to different than mine location.
+Also make sure that xxx in "User=xxx" there is actually the user, who is running PulseAudio process. To get that to know run 
 ```
 ps -ef | grep -i pulseaudio
 ```
-In my case PulseAudio is running under pi, so the service will be also runing under pi
+In my case PulseAudio server is running under **pi**, so this service will be also runing under pi
 
 Install the service:
 ```
@@ -77,44 +84,47 @@ rm /usr/local/bin/sayit
 
 ### Make sure to visit main.py to see what commands are there
 
-Given I have a very specific use cases, like I have EmulationStation executed in multi-user.target, you will definitely want to change/delete
-couple of commands. The code is very simple and fun to play with, thanks to the original creator. 
+Given I have a very specific use case for my project, I do have an EmulationStation started in multi-user.target. 
+You will definitely want to change/delete couple of commands in **main.py**. 
+The code is very simple and fun to play with, thanks to the original creator. 
 
-Whenever you change anything in main.py, make sure to restart the service so your changes will be picked up:
+Whenever you change anything in main.py, make sure to restart the service so your changes will start to take effect:
 ```
 systemctl restart voiceassistant.service
 ```
 
 ### Where to see logs
 
-When the voice assistant is installed as service, logs will be collected by journald, and you can see them like this:
+When the voice assistant is installed as service, logs will be collected by journald. 
+You can see them like this:
 ```
 journalctl -f -u voiceassistant.service
 ```
 
-If you executed the assistant from the command line, logs will be printed right to stdout as usual.
+If you started the assistant from the command line, logs will be printed right to stdout as usual.
 
 ### Audio issues
 
-I only tested it on my Orange PI 4 LTS which is having a built-in microphone.
+I only tested this script on my Orange PI 4 LTS which is having a built-in microphone.
 pyAudio / SpeechRecognition puthon packages did a great job detecting it and using it as the default input device. But you might be less lucky than me.
-If you have troubles with the built-in microphone or if your SBC doesn't have it, the usual suggesting would be to buy a decent USB microphone 
-instead and make sure it will be detected by pyAudio / SpeechRecognition, by running it as stand-alone (not as deamon)
 
-First make sure you can run shell **sayit** script under the non-privileged user and you hear the sound:
+If you have any microphone troubles, make sure your mic is detected by pyAudio / SpeechRecognition, by running the main.py as stand-alone (not as deamon). It prints a lot
+of stuff at the begining which is related to audio devices detection by pyAudio. Troubleshoot that as a generic issue.
+
+If the script dosn't play anything as a response to your questions, make sure you can run shell **sayit** script under the non-privileged user and you hear the sound:
 ```
 /usr/local/bin/sayit "This is the voice of Google. Testing, testing, one, two, three"
 ```
 
-Also make sure you can run sayit with using sudo, but under the same user, who's owning PulseAudio (in my case it's **pi**):
+Also make sure you can run it with using sudo, but under the same user, who's owning PulseAudio (in my case it's **pi**):
 
 ```
-# first become a root with clean env
+# first become a root to clean env
 sudo su -
-# then attempt to run sayit under your original user
+# then attempt to run sayit, but under your original user (mine was pi)
 sudo -u pi sayit "Say it again"
 ```
-I had to export XDG_RUNTIME_DIR in that script, otherwise all audio playback tools using PulseAudio didn't know which one to use. 
+I had to export XDG_RUNTIME_DIR in sayit, otherwise all audio playback tools using PulseAudio didn't know which one to use. 
 
 
 ## Project TODO
@@ -135,10 +145,10 @@ I had to export XDG_RUNTIME_DIR in that script, otherwise all audio playback too
 
 6. Implement a fallback mechanism in sayit shell file, so if internet is not around (and gTTS won't work) we'll switch to something different 
 
-7. Implement confirmations for dangerous commands  like "Switch to gaming mode" / "Enough of gaming". 
+7. Implement confirmations for dangerous commands  like "Switch to gaming mode" / "Enough of gaming" / "Reboot"
 
 8. Restructure the code a bit:
     - so it won't be just silly plaintext matching, but using regexp 
-    - add to the same place of config bindings to various functions to call
+    - add to the same place of config bindings to various functions to call, so it won't be that scattered among the code
 
 9. Return the browser manipulation tool back (DISPLAY issue, when X is not started in multi-user.target)
