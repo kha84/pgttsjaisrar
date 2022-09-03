@@ -79,11 +79,10 @@ rm /usr/local/bin/sayit
 
 When the voice assistant is installed as service, logs will be collected by journald, and you can see them like this:
 ```
-journalctl -a -p7 -f -u voiceassistant.service
+journalctl -f -u voiceassistant.service
 ```
-... then press [SHIFT] + [F]
 
-If you executed the assistant from the command line, logs will be printed there.
+If you executed the assistant from the command line, logs will be printed right to stdout as usual.
 
 ### Audio issues
 

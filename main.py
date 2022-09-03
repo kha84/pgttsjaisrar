@@ -71,7 +71,6 @@ def take_command():
 
 def run_alexa():
     command = take_command()
-    print("run_alexa() got command: " + command)
     if not command:
         return
 #    if 'play' in command:
