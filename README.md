@@ -79,7 +79,7 @@ rm /usr/local/bin/sayit
 
 When the voice assistant is installed as service, logs will be collected by journald, and you can see them like this:
 ```
-journalctl -x
+journalctl -a -p7 -f -u voiceassistant.service
 ```
 ... then press [SHIFT] + [F]
 

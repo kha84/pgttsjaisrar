@@ -95,8 +95,10 @@ def run_alexa():
     elif any(x in command for x in phraseJoke):
         talk(pyjokes.get_joke())
     elif any(x in command for x in phrasePlay):
+        talk("Allright, let's play some games")
         os.system('sudo systemctl isolate multi-user.target')
     elif any(x in command for x in phraseWork):
+        talk("Sure, switching to working mode")
         os.system('sudo systemctl isolate graphical.target')
     elif any(x in command for x in phraseExit):
         talk("Bye-bye!")
