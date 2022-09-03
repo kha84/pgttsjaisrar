@@ -6,15 +6,24 @@ import wikipedia
 import pyjokes
 import subprocess
 
+## configuration ##
+last_text = 'I did not say anything'
+activation_word = 'orange'
+phraseRepeat = ['repeat', 'say it again','pardon me']
+phraseJoke = ['tell me a joke','say something funny','make me smile']
+phraseExit = ['stop listening','terminate yourself','exit']
+###################
+
 listener = sr.Recognizer()
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
 
-
-def talk_orig(text):
-    engine.say(text)
-    engine.runAndWait()
+## disabled this as we're using external shell script
+# engine = pyttsx3.init()
+# voices = engine.getProperty('voices')
+# engine.setProperty('voice', voices[0].id)
+# 
+# def talk_orig(text):
+#     engine.say(text)
+#     engine.runAndWait()
 
 
 def talk(text):
@@ -22,6 +31,7 @@ def talk(text):
         print("Warning: no text was given to talk function")
         return 
     print("Talking this text: "+text)
+    last_text = text;
     process = subprocess.Popen('/usr/local/bin/sayit "%s"' % str(text), shell=True)
     process.wait()
     print("Return code is: " + str(process.returncode))
@@ -62,11 +72,12 @@ def run_alexa():
             info = wikipedia.summary(person, 1)
         except:
             info = "I have no idea"
-        print(info)
         talk(info)
-    elif 'joke' in command:
+    elif any(x in command for x in phraseRepeat):
+        talk(last_text)
+    elif any(x in command for x in phraseJoke):
         talk(pyjokes.get_joke())
-    elif 'stop listening' in command:
+    elif any(x in command for x in phraseExit):
         talk("Bye-bye!")
         quit()
     else:

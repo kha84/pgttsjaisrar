@@ -5,11 +5,13 @@ then
   exit 0
 fi
 
-# implementation with using ffplay 
+export XDG_RUNTIME_DIR=/run/user/1000
+
+# implementation with using ffplay
 #tfile="$(mktemp /tmp/tts.XXXXXXXXX.mp3)" || exit 1
 #~pi/.local/bin/gtts-cli "$1" --output $tfile
 #ffplay -nodisp -autoexit -loglevel quiet $tfile
 #rm $tfile
 
-# implementation with using SoX
-~/.local/bin/gtts-cli "$1" | play -t mp3 -
+# implementation with using SoX play
+~pi/.local/bin/gtts-cli "$1" | play -t mp3 -
