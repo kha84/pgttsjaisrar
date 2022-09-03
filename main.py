@@ -17,6 +17,7 @@ phraseExit = ['stop listening','terminate yourself','exit']
 phraseAsk = ['what','who','when']
 phrasePlay = ["let's play","gaming mode","enought of working"]
 phraseWork = ["let's work","working mode","enought of working"]
+phraseReboot=["reboot yourself","reboot computer","restart computer"]
 ###################
 
 listener = sr.Recognizer()
@@ -93,12 +94,19 @@ def run_alexa():
         talk(last_text)
     elif any(x in command for x in phraseJoke):
         talk(pyjokes.get_joke())
+    ########### dangerous commands ##########
     elif any(x in command for x in phrasePlay):
         talk("Allright, let's play some games")
+        # TODO: don't just blindly switch, check if the target is already there and say it if it is
         os.system('sudo systemctl isolate multi-user.target')
     elif any(x in command for x in phraseWork):
         talk("Sure, switching to working mode")
+        # TODO: don't just blindly switch, check if the target is already there and say it if it is
         os.system('sudo systemctl isolate graphical.target')
+    elif any(x in command for x in phraseReboot):
+        talk("The machine is going to be rebooted now!")
+        # TODO: ask for confirmation
+        os.system('sudo reboot')
     elif any(x in command for x in phraseExit):
         talk("Bye-bye!")
         quit()

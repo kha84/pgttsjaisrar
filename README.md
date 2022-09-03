@@ -75,6 +75,16 @@ rm /usr/local/bin/sayit
 
 ## Usage notes / troubleshooting
 
+### Make sure to visit main.py to see what commands are there
+
+Given I have a very specific use cases, like I have EmulationStation executed in multi-user.target, you will definitely want to change/delete
+couple of commands. The code is very simple and fun to play with, thanks to the original creator. 
+
+Whenever you change anything in main.py, make sure to restart the service so your changes will be picked up:
+```
+systemctl restart voiceassistant.service
+```
+
 ### Where to see logs
 
 When the voice assistant is installed as service, logs will be collected by journald, and you can see them like this:
@@ -113,7 +123,7 @@ I had to export XDG_RUNTIME_DIR in that script, otherwise all audio playback too
    https://gtts.readthedocs.io/en/latest/module.html#languages-gtts-lang
    https://pypi.org/project/SpeechRecognition/
    
-3. Cache mp3 files to /tmp in "sayit"
+3. Cache mp3 files to /tmp in "sayit" to avoid extra network hops to google text-to-speech
 
 4. Dialog mode, as an alternative to wake-up word:
     - hey orange
@@ -121,10 +131,14 @@ I had to export XDG_RUNTIME_DIR in that script, otherwise all audio playback too
     - what is the best search engine?
     - (no applicable command found => get answer from DDG)
 
-5. Switch from online recognition to Mozilla Deep Speech
+5. Switch from online recognition to Mozilla Deep Speech or similar
 
 6. Implement a fallback mechanism in sayit shell file, so if internet is not around (and gTTS won't work) we'll switch to something different 
 
-7. Implement some more commands, like "Switch to gaming mode" / "Enough of gaming" with confirmations
+7. Implement confirmations for dangerous commands  like "Switch to gaming mode" / "Enough of gaming". 
 
-8. Return the browser manipulation tool back (DISPLAY issue, when X is not started)
+8. Restructure the code a bit:
+    - so it won't be just silly plaintext matching, but using regexp 
+    - add to the same place of config bindings to various functions to call
+
+9. Return the browser manipulation tool back (DISPLAY issue, when X is not started in multi-user.target)
