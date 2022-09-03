@@ -141,7 +141,7 @@ I had to export XDG_RUNTIME_DIR in sayit, otherwise all audio playback tools usi
     - what is the best search engine?
     - (no applicable command found => get answer from DDG)
 
-5. Switch from online recognition to Mozilla Deep Speech or similar
+5. Switch from online recognition to Mozilla Deep Speech or [coqui-ai](https://github.com/coqui-ai)
 
 6. Implement a fallback mechanism in sayit shell file, so if internet is not around (and gTTS won't work) we'll switch to something different 
 
