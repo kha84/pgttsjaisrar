@@ -5,6 +5,8 @@ import datetime
 import wikipedia
 import pyjokes
 import subprocess
+import requests
+import os
 
 ## configuration ##
 last_text = 'I did not say anything'
@@ -12,6 +14,9 @@ activation_word = 'orange'
 phraseRepeat = ['repeat', 'say it again','pardon me']
 phraseJoke = ['tell me a joke','say something funny','make me smile']
 phraseExit = ['stop listening','terminate yourself','exit']
+phraseAsk = ['what','who','when']
+phrasePlay = ["let's play","gaming mode","enought of working"]
+phraseWork = ["let's work","working mode","enought of working"]
 ###################
 
 listener = sr.Recognizer()
@@ -25,12 +30,23 @@ listener = sr.Recognizer()
 #     engine.say(text)
 #     engine.runAndWait()
 
+def ask_ddg(text):
+    r = requests.get("https://api.duckduckgo.com",
+        params = {
+            "q": text,
+            "format": "json"
+        })
+    data = r.json()
+    if not data["Abstract"]:
+        return 'I searched that in duckduckgo but it did not return me anything'
+    return data["Abstract"]
 
 def talk(text):
     if not text:
         print("Warning: no text was given to talk function")
         return 
     print("Talking this text: "+text)
+    global last_text
     last_text = text;
     process = subprocess.Popen('/usr/local/bin/sayit "%s"' % str(text), shell=True)
     process.wait()
@@ -45,14 +61,13 @@ def take_command():
             command = listener.recognize_google(voice)
             print('Recognized raw: '+command)
             command = command.lower()
-            if 'orange' in command:
-                command = command.replace('orange', '')
+            if activation_word in command:
+                command = command.replace(activation_word, '')
                 print('Got command: '+command)
                 return command
     except:
         return ''
     return ''
-
 
 def run_alexa():
     command = take_command()
@@ -73,15 +88,21 @@ def run_alexa():
         except:
             info = "I have no idea"
         talk(info)
+    elif any(x in command for x in phraseAsk):
+        talk(ask_ddg(command))  
     elif any(x in command for x in phraseRepeat):
         talk(last_text)
     elif any(x in command for x in phraseJoke):
         talk(pyjokes.get_joke())
+    elif any(x in command for x in phrasePlay):
+        os.system('sudo systemctl isolate multi-user.target')
+    elif any(x in command for x in phraseWork):
+        os.system('sudo systemctl isolate graphical.target')
     elif any(x in command for x in phraseExit):
         talk("Bye-bye!")
         quit()
     else:
-        talk("Sorry did't get it")
+        talk("Sorry didn't get it")
 
 while True:
     run_alexa()

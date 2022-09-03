@@ -114,11 +114,6 @@ I had to export XDG_RUNTIME_DIR in that script, otherwise all audio playback too
    https://gtts.readthedocs.io/en/latest/module.html#languages-gtts-lang
    https://pypi.org/project/SpeechRecognition/
    
-2. Query DuckDuckGo by default
-   https://duckduckgo.com/api
-   https://pypi.org/project/DuckDuckGo-Python3-Library/
-   https://github.com/crazedpsyc/python-duckduckgo/
-
 3. Cache mp3 files to /tmp in "sayit"
 
 4. Dialog mode, as an alternative to wake-up word:
